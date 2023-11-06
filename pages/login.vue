@@ -1,5 +1,5 @@
 <template>
-    <v-flex xs12 sm8 md4 class="d-flex justify-center mb-6">
+    <div xs12 sm8 md4 class="d-flex justify-center mb-6">
         <v-card :class="[mdAndUp ? 'w-50' : 'w-100', 'elevation-12']">
             <v-toolbar dark color="primary">
                 <v-toolbar-title>Login form</v-toolbar-title>
@@ -27,7 +27,7 @@
                 </form>
             </v-card-text>
         </v-card>
-    </v-flex>
+    </div>
 </template>
 <script setup lang="ts">
     import { useDisplay } from 'vuetify';
@@ -40,7 +40,7 @@
     const password = ref('');
 
     function login() {
-        console.log(username + 'logged in');
+        console.log(username.value + 'logged in');
     }
     const { mdAndUp } = useDisplay();
 </script>
