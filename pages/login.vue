@@ -31,16 +31,22 @@
 </template>
 <script setup lang="ts">
     import { useDisplay } from 'vuetify';
+    import { useAuthStore } from '~/store/auth';
 
     definePageMeta({
         layout: 'login'
     });
+    const { mdAndUp } = useDisplay();
+    const authStore = useAuthStore();
+
+    if (authStore.active) {
+        await navigateTo('/');
+    }
 
     const username = ref('');
     const password = ref('');
 
     function login() {
-        console.log(username.value + 'logged in');
+        authStore.login({ username: username.value, password: password.value });
     }
-    const { mdAndUp } = useDisplay();
 </script>
