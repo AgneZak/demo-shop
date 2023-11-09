@@ -34,8 +34,10 @@
     import { useAuthStore } from '~/store/auth';
 
     definePageMeta({
-        layout: 'login'
+        layout: 'login',
+        middleware: 'auth'
     });
+
     const { mdAndUp } = useDisplay();
     const authStore = useAuthStore();
 
