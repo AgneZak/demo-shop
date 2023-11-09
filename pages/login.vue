@@ -41,10 +41,6 @@
     const { mdAndUp } = useDisplay();
     const authStore = useAuthStore();
 
-    if (authStore.active) {
-        await navigateTo('/');
-    }
-
     const username = ref('');
     const password = ref('');
 
