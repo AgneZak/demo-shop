@@ -35,12 +35,14 @@ export const useUsersStore = defineStore('users', {
     }),
     actions: {
         loadUsers(limit?: number, sort?: SORT) {
-            const mainUrl = 'users';
-            const limitParam = limit ? `?limit=${limit}` : '';
-            const sortParam = sort ? `?sort=${sort}` : '';
-            const url = `${mainUrl}${limitParam}${sortParam}`;
-
-            api({ method: 'get', url })
+            api({
+                method: 'get',
+                url: 'users',
+                params: {
+                    limit,
+                    sort
+                }
+            })
                 .then((response: AxiosResponse<IUser[], any>) => {
                     this.users = response.data;
                 })
@@ -55,7 +57,13 @@ export const useUsersStore = defineStore('users', {
                 return (this.activeUser = user);
             }
 
-            api({ method: 'get', url: `users/${id}` })
+            api({
+                method: 'get',
+                url: 'users',
+                params: {
+                    id
+                }
+            })
                 .then((response: AxiosResponse<IUser, any>) => {
                     return (this.activeUser = response.data);
                 })
@@ -75,7 +83,7 @@ export const useUsersStore = defineStore('users', {
                 });
         },
         updateUser(userInfo: IUser) {
-            api({ method: 'patch', url: `users/${userInfo.id}`, data: userInfo })
+            api({ method: 'patch', url: 'users', data: userInfo, params: { id: userInfo.id } })
                 .then((response: AxiosResponse<IUser, any>) => {
                     this.activeUser = response.data;
                     // To see updated user data
@@ -92,7 +100,7 @@ export const useUsersStore = defineStore('users', {
                 });
         },
         deleteUser(userInfo: IUser) {
-            api({ method: 'delete', url: `users/${userInfo.id}` })
+            api({ method: 'delete', url: 'users', params: { id: userInfo.id } })
                 .then((response: AxiosResponse<IUser, any>) => {
                     const deletedUser = response.data;
                     // To see updated users array
