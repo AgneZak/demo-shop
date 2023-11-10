@@ -4,6 +4,9 @@
     </NuxtLayout>
 </template>
 <script setup lang="ts">
-    // You might choose this based on an API call or logged-in status
-    const layout = 'login';
+    import { useAuthStore } from './store/auth';
+
+    const authStore = useAuthStore();
+
+    const layout = authStore.active ? 'default' : 'login';
 </script>
