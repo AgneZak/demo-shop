@@ -23,7 +23,7 @@ interface IUser {
     phone: string;
 }
 
-enum SORT {
+export enum SORT {
     DESC = 'desc',
     ASC = 'asc'
 }
@@ -34,7 +34,7 @@ export const useUsersStore = defineStore('users', {
         activeUser: {} as IUser
     }),
     actions: {
-        loadAllUsers(limit?: number, sort?: SORT) {
+        loadUsers(limit?: number, sort?: SORT) {
             const mainUrl = 'users';
             const limitParam = limit ? `?limit=${limit}` : '';
             const sortParam = sort ? `?sort=${sort}` : '';
@@ -110,7 +110,7 @@ export const useUsersStore = defineStore('users', {
         }
     },
     getters: {
-        getAllUsers(): IUser[] {
+        getUsers(): IUser[] {
             return this.users;
         }
     }
