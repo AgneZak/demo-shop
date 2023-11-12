@@ -1,11 +1,13 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { api } from '~/composables/api';
+
+import { ICart } from '~/types/carts/cart';
 import { SORT } from '~/types/shared';
 
 export const useCartStore = defineStore('cart', {
     state: () => ({
-        carts: [],
-        activeCart: {}
+        carts: [] as ICart[],
+        activeCart: {} as ICart
     }),
     actions: {
         loadCarts(limit?: number, sort?: SORT) {
@@ -17,7 +19,7 @@ export const useCartStore = defineStore('cart', {
                     sort
                 }
             })
-                .then((response: AxiosResponse<any, any>) => {
+                .then((response: AxiosResponse<ICart[], any>) => {
                     this.carts = response.data;
                 })
                 .catch((error: AxiosError) => {
@@ -38,16 +40,16 @@ export const useCartStore = defineStore('cart', {
                     id
                 }
             })
-                .then((response: AxiosResponse<any, any>) => {
+                .then((response: AxiosResponse<ICart, any>) => {
                     return (this.activeCart = response.data);
                 })
                 .catch((error: AxiosError) => {
                     console.error(error);
                 });
         },
-        addCart(cartInfo: any) {
+        addCart(cartInfo: ICart) {
             api({ method: 'post', url: 'carts', data: cartInfo })
-                .then((response: AxiosResponse<any, any>) => {
+                .then((response: AxiosResponse<ICart, any>) => {
                     this.activeCart = response.data;
                     // To see added user because of faked API
                     this.carts.push({ ...cartInfo, ...response.data });
@@ -56,26 +58,26 @@ export const useCartStore = defineStore('cart', {
                     console.error(error);
                 });
         },
-        updateCart(cartInfo: any) {
+        updateCart(cartInfo: ICart) {
             api({ method: 'patch', url: `carts/${cartInfo.id}`, data: cartInfo })
-                .then((response: AxiosResponse<any, any>) => {
+                .then((response: AxiosResponse<{ id: number }, any>) => {
                     this.activeCart = response.data;
                     // To see updated user data
-                    const userIndex = this.carts.findIndex((user) => {
-                        return user.id === this.activeUser.id;
+                    const userIndex = this.carts.findIndex((cart) => {
+                        return cart.id === this.activeCart.id;
                     });
 
                     if (userIndex !== -1) {
-                        this.carts[userIndex] = this.activeUser;
+                        this.carts[userIndex] = this.activeCart;
                     }
                 })
                 .catch((error: AxiosError) => {
                     console.error(error);
                 });
         },
-        deleteCart(cartInfo: any) {
+        deleteCart(cartInfo: ICart) {
             api({ method: 'delete', url: `carts/${cartInfo.id}` })
-                .then((response: AxiosResponse<IUser, any>) => {
+                .then((response: AxiosResponse<{ id: number }, any>) => {
                     const deletedCart = response.data ?? cartInfo;
                     // To see updated carts array
                     const cartIndex = this.carts.findIndex((cart) => {
@@ -92,7 +94,7 @@ export const useCartStore = defineStore('cart', {
         }
     },
     getters: {
-        getCarts(): any[] {
+        getCarts(): ICart[] {
             return this.carts;
         }
     }
