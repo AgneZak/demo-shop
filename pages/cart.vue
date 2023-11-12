@@ -9,6 +9,9 @@
                     <v-radio label="DESC" value="desc"></v-radio>
                     <v-radio label="ASC" value="asc"></v-radio>
                 </v-radio-group>
+                <v-row justify="space-around">
+                    <v-date-picker v-model="date" min="2020-01-01" range></v-date-picker>
+                </v-row>
             </div>
             <v-btn class="mt-4 mr-4" color="primary" @click="loadCarts">Load Carts</v-btn>
             <v-btn class="mt-4" color="primary"> <v-icon icon="mdi-cart-plus"></v-icon> <span class="ml-1">Add Cart</span></v-btn>
@@ -59,6 +62,7 @@
     const cartStore = useCartStore();
     const limit = ref(0);
     const sort = ref(undefined);
+    const date = ref();
 
     // const showDialog = ref(false);
     // const addUser = ref(false);
