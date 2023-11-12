@@ -1,8 +1,8 @@
 <template>
     <div>
-        <section>
+        <section class="pa-4">
             <h1>Users</h1>
-            <div class="d-flex">
+            <div class="d-flex mt-4">
                 <v-text-field v-model="limit" name="limit" label="Limit" type="text" placeholder="limit" variant="outlined"></v-text-field>
 
                 <v-radio-group v-model="sort" inline label="Sort">
@@ -12,7 +12,7 @@
             </div>
             <v-btn class="mt-4" color="primary" @click="loadUsers">Get Users</v-btn>
         </section>
-        <v-table density="compact" fixed-header height="calc(54vh - 40px)">
+        <v-table density="compact" fixed-header height="calc(60vh - 50px)">
             <thead>
                 <tr>
                     <th class="text-left">ID</th>
