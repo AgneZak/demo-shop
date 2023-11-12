@@ -14,8 +14,7 @@
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
-        <v-main> <slot /> </v-main>
-        <v-footer></v-footer>
+        <v-main class="full-height"> <slot /> </v-main>
     </v-layout>
 </template>
 <script setup lang="ts">
@@ -29,3 +28,8 @@
         navigateTo(`/${id}`);
     }
 </script>
+<style lang="scss">
+    .full-height {
+        height: calc(100vh - 40px);
+    }
+</style>
