@@ -76,7 +76,7 @@ export const useUsersStore = defineStore('users', {
         deleteUser(userInfo: IUser) {
             api({ method: 'delete', url: `users/${userInfo.id}` })
                 .then((response: AxiosResponse<IUser, any>) => {
-                    const deletedUser = response.data ?? userInfo.id;
+                    const deletedUser = response.data ?? userInfo;
                     // To see updated users array
                     const userIndex = this.users.findIndex((user) => {
                         return user.id === deletedUser.id;
