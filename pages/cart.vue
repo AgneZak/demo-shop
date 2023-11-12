@@ -32,7 +32,14 @@
                     <td>{{ cart.id }}</td>
                     <td>{{ cart.userId }}</td>
                     <td>{{ cart.date }}</td>
-                    <td>Products toggle</td>
+                    <td>
+                        <template v-for="product in cart.products" :key="product.produtId">
+                            <v-chip color="primary">
+                                <v-icon icon="mdi-package-variant"></v-icon><span>{{ product.productId }} &</span>
+                                <span>& Quantity: {{ product.quantity }}</span>
+                            </v-chip></template
+                        >
+                    </td>
                     <td><v-icon icon="mdi-pen"></v-icon></td>
                     <td><v-icon icon="mdi-cart-off" @click="deleteCart(cart)"></v-icon></td>
                 </tr>
