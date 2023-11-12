@@ -1,0 +1,75 @@
+<template>
+    <div>
+        <section class="pa-4">
+            <h1>Carts</h1>
+            <div class="d-flex mt-4">
+                <v-text-field v-model="limit" name="limit" label="Limit" type="text" placeholder="limit" variant="outlined"></v-text-field>
+
+                <v-radio-group v-model="sort" inline label="Sort">
+                    <v-radio label="DESC" value="desc"></v-radio>
+                    <v-radio label="ASC" value="asc"></v-radio>
+                </v-radio-group>
+            </div>
+            <v-btn class="mt-4 mr-4" color="primary" @click="loadCarts">Load Carts</v-btn>
+            <v-btn class="mt-4" color="primary">Add Cart</v-btn>
+        </section>
+        <v-table density="compact" fixed-header height="calc(60vh - 50px)">
+            <thead>
+                <tr>
+                    <th class="text-left">ID</th>
+                    <th class="text-left">UserID</th>
+                    <th class="text-left">Date</th>
+                    <th class="text-left">Products</th>
+                    <th class="text-left">Edit</th>
+                    <th class="text-left">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-if="cartStore.carts.length <= 0">
+                    <td>Select props and press Get Carts</td>
+                </tr>
+                <tr v-for="cart in cartStore.carts" :key="cart.id">
+                    <td>{{ cart.id }}</td>
+                    <td>{{ cart.userId }}</td>
+                    <td>{{ cart.date }}</td>
+                    <td>Products toggle</td>
+                    <td><v-icon icon="mdi-pen"></v-icon></td>
+                    <td><v-icon icon="mdi-trash-can-outline" @click="deleteCart(cart)"></v-icon></td>
+                </tr>
+            </tbody>
+        </v-table>
+    </div>
+</template>
+
+<script setup lang="ts">
+    import { useCartStore } from '~/store/cart';
+    import { ICart } from '~/types/carts/cart';
+
+    definePageMeta({
+        middleware: 'auth'
+    });
+
+    const cartStore = useCartStore();
+    const limit = ref(0);
+    const sort = ref(undefined);
+
+    // const showDialog = ref(false);
+    // const addUser = ref(false);
+    // const dialogUser = reactive<ICart>(useCloneDeep(initUser));
+
+    function loadCarts() {
+        cartStore.loadCarts(limit.value, sort.value);
+    }
+
+    // function toggleDialog(cart: ICart, add?: boolean) {
+    //     Object.assign(dialogUser, useCloneDeep(cart));
+    //     addUser.value = add || false;
+    //     showDialog.value = !showDialog.value;
+    // }
+
+    function deleteCart(cart: ICart) {
+        cartStore.deleteCart(cart);
+    }
+
+    cartStore.loadCarts(limit.value, sort.value);
+</script>

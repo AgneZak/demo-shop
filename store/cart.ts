@@ -60,7 +60,7 @@ export const useCartStore = defineStore('cart', {
         },
         updateCart(cartInfo: ICart) {
             api({ method: 'patch', url: `carts/${cartInfo.id}`, data: cartInfo })
-                .then((response: AxiosResponse<{ id: number }, any>) => {
+                .then((response: AxiosResponse<ICart, any>) => {
                     this.activeCart = response.data;
                     // To see updated user data
                     const userIndex = this.carts.findIndex((cart) => {
