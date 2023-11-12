@@ -50,7 +50,6 @@ export const useUsersStore = defineStore('users', {
                 .then((response: AxiosResponse<IUser, any>) => {
                     this.activeUser = response.data;
                     // To see added user because of faked API
-                    console.log(userInfo)
                     this.users.push({ ...userInfo, ...response.data });
                 })
                 .catch((error: AxiosError) => {
@@ -61,7 +60,6 @@ export const useUsersStore = defineStore('users', {
             api({ method: 'patch', url: 'users', data: userInfo, params: { id: userInfo.id } })
                 .then((response: AxiosResponse<IUser, any>) => {
                     this.activeUser = response.data;
-                    console.log(response.data);
                     // To see updated user data
                     const userIndex = this.users.findIndex((user) => {
                         return user.id === this.activeUser.id;

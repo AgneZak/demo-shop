@@ -81,7 +81,7 @@
     }
 
     function save() {
-        const user = { ...userInfo };
+        const user = useCloneDeep(userInfo);
         if (props.add) {
             usersStore.addUser(user);
         } else {

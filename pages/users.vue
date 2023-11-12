@@ -74,14 +74,14 @@
 
     const showDialog = ref(false);
     const addUser = ref(false);
-    const dialogUser = reactive<IUser>({ ...initUser });
+    const dialogUser = reactive<IUser>(useCloneDeep(initUser));
 
     function loadUsers() {
         usersStore.loadUsers(limit.value, sort.value);
     }
 
     function toggleDialog(user: IUser, add?: boolean) {
-        Object.assign(dialogUser, { ...user });
+        Object.assign(dialogUser, useCloneDeep(user));
         addUser.value = add || false;
         showDialog.value = !showDialog.value;
     }
