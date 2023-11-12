@@ -34,8 +34,10 @@
                     <td>{{ user.email }}</td>
                     <td>{{ user.address.city }}</td>
 
-                    <td><v-icon icon="mdi-pen" @click="toggleDialog(user)"></v-icon></td>
-                    <td><v-icon icon="mdi-trash-can-outline" @click="deleteUser(user)"></v-icon></td>
+                    <td>
+                        <v-icon icon="mdi-account-edit" @click="toggleDialog(user)"></v-icon>
+                    </td>
+                    <td><v-icon icon="mdi-account-remove" @click="deleteUser(user)"></v-icon></td>
                 </tr>
             </tbody>
         </v-table>

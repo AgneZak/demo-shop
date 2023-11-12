@@ -11,7 +11,7 @@
                 </v-radio-group>
             </div>
             <v-btn class="mt-4 mr-4" color="primary" @click="loadCarts">Load Carts</v-btn>
-            <v-btn class="mt-4" color="primary">Add Cart</v-btn>
+            <v-btn class="mt-4" color="primary"> <v-icon icon="mdi-cart-plus"></v-icon> <span class="ml-1">Add Cart</span></v-btn>
         </section>
         <v-table density="compact" fixed-header height="calc(60vh - 50px)">
             <thead>
@@ -34,7 +34,7 @@
                     <td>{{ cart.date }}</td>
                     <td>Products toggle</td>
                     <td><v-icon icon="mdi-pen"></v-icon></td>
-                    <td><v-icon icon="mdi-trash-can-outline" @click="deleteCart(cart)"></v-icon></td>
+                    <td><v-icon icon="mdi-cart-off" @click="deleteCart(cart)"></v-icon></td>
                 </tr>
             </tbody>
         </v-table>
