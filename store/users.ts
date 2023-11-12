@@ -1,6 +1,7 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { api } from '~/composables/api';
-import { IUser, SORT } from '~/types/users/user';
+import { IUser } from '~/types/users/user';
+import { SORT } from '~/types/shared';
 
 export const useUsersStore = defineStore('users', {
     state: () => ({

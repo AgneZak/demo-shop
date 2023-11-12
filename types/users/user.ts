@@ -19,8 +19,3 @@ export interface IUser {
     };
     phone: string;
 }
-
-export enum SORT {
-    DESC = 'desc',
-    ASC = 'asc'
-}
