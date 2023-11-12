@@ -9,31 +9,38 @@
                     <v-container>
                         <v-row>
                             <v-col cols="12" sm="6" md="4">
-                                <v-text-field label="Legal first name*" required></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
+                                <v-text-field v-model="userInfo.name.firstname" label="Legal first name*" required> </v-text-field>
                             </v-col>
                             <v-col cols="12" sm="6" md="4">
                                 <v-text-field
+                                    v-model="userInfo.name.lastname"
+                                    label="Legal last name"
+                                    hint="example of helper text only on focus"
+                                >
+                                </v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                    v-model="userInfo.username"
                                     label="Username*"
                                     hint="example of persistent helper text"
                                     persistent-hint
                                     required
-                                ></v-text-field>
+                                >
+                                </v-text-field>
                             </v-col>
                             <v-col cols="12">
-                                <v-text-field label="Email*" required></v-text-field>
+                                <v-text-field v-model="userInfo.email" label="Email*" required> </v-text-field>
                             </v-col>
                             <v-col cols="12">
-                                <v-text-field label="Password*" type="password" required></v-text-field>
+                                <v-text-field v-model="userInfo.password" label="Password*" type="password" required> </v-text-field>
                             </v-col>
                             <v-col cols="12" sm="6">
-                                <v-autocomplete
+                                <v-combobox
+                                    v-model="userInfo.address.city"
                                     :items="['Vilnius', 'Kaunas', 'Klaipeda', 'Siauliai', 'Alytus']"
                                     label="City"
-                                    multiple
-                                ></v-autocomplete>
+                                ></v-combobox>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -49,17 +56,21 @@
     </v-row>
 </template>
 <script lang="ts" setup>
+    import { IUser } from '~/types/users/user';
+
     const props = defineProps<{
         show: boolean;
+        user: IUser;
     }>();
 
     const dialog = computed(() => props.show);
+    const userInfo = reactive<IUser>(props.user || {});
 
     const emit = defineEmits<{
-        close: [close: boolean];
+        (e: 'close'): void;
     }>();
 
     function close() {
-        emit('close', false);
+        emit('close');
     }
 </script>

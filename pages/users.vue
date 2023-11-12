@@ -11,6 +11,7 @@
                 </v-radio-group>
             </div>
             <v-btn class="mt-4" color="primary" @click="loadUsers">Get Users</v-btn>
+            <v-btn class="mt-4" color="primary" @click="toggleDialog(initUser)">Add User</v-btn>
         </section>
         <v-table density="compact" fixed-header height="calc(60vh - 50px)">
             <thead>
@@ -29,25 +30,56 @@
                     <td>{{ user.id }}</td>
                     <td>{{ user.name.firstname }}</td>
                     <td>{{ user.email }}</td>
-                    <td><v-icon icon="mdi-pen"></v-icon></td>
+                    <td><v-icon icon="mdi-pen" @click="toggleDialog(user)"></v-icon></td>
                 </tr>
             </tbody>
         </v-table>
+        <UsersModal :show="showDialog" :user="dialogUser" @close="toggleDialog(initUser)"></UsersModal>
     </div>
 </template>
 
 <script setup lang="ts">
     import { useUsersStore } from '~/store/users';
+    import { IUser } from '~/types/users/user';
 
     definePageMeta({
         middleware: 'auth'
     });
+    const initUser = {
+        id: 0,
+        email: '',
+        username: '',
+        password: '',
+        name: {
+            firstname: '',
+            lastname: ''
+        },
+        address: {
+            city: '',
+            street: '',
+            number: 0,
+            zipcode: '',
+            geolocation: {
+                lat: '',
+                long: ''
+            }
+        },
+        phone: ''
+    };
 
     const usersStore = useUsersStore();
     const limit = ref(0);
     const sort = ref(undefined);
 
+    const showDialog = ref(false);
+    const dialogUser = reactive<IUser>(initUser);
+
     function loadUsers() {
         usersStore.loadUsers(limit.value, sort.value);
+    }
+
+    function toggleDialog(user?: IUser) {
+        Object.assign(dialogUser, user);
+        showDialog.value = !showDialog.value;
     }
 </script>
