@@ -10,8 +10,8 @@
                     <v-radio label="ASC" value="asc"></v-radio>
                 </v-radio-group>
             </div>
-            <v-btn class="mt-4" color="primary" @click="loadUsers">Get Users</v-btn>
-            <v-btn class="mt-4" color="primary" @click="toggleDialog(initUser)">Add User</v-btn>
+            <v-btn class="mt-4 mr-4" color="primary" @click="loadUsers">Get Users</v-btn>
+            <v-btn class="mt-4" color="primary" @click="toggleDialog(initUser, true)">Add User</v-btn>
         </section>
         <v-table density="compact" fixed-header height="calc(60vh - 50px)">
             <thead>
@@ -34,7 +34,7 @@
                 </tr>
             </tbody>
         </v-table>
-        <UsersModal :show="showDialog" :user="dialogUser" @close="toggleDialog(initUser)"></UsersModal>
+        <UsersModal :show="showDialog" :user="dialogUser" :add="addUser" @close="toggleDialog(initUser)"></UsersModal>
     </div>
 </template>
 
@@ -45,6 +45,7 @@
     definePageMeta({
         middleware: 'auth'
     });
+
     const initUser = {
         id: 0,
         email: '',
@@ -72,14 +73,16 @@
     const sort = ref(undefined);
 
     const showDialog = ref(false);
-    const dialogUser = reactive<IUser>(initUser);
+    const addUser = ref(false);
+    const dialogUser = reactive<IUser>({ ...initUser });
 
     function loadUsers() {
         usersStore.loadUsers(limit.value, sort.value);
     }
 
-    function toggleDialog(user?: IUser) {
-        Object.assign(dialogUser, user);
+    function toggleDialog(user: IUser, add?: boolean) {
+        Object.assign(dialogUser, { ...user });
+        addUser.value = add || false;
         showDialog.value = !showDialog.value;
     }
 </script>

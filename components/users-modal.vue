@@ -3,7 +3,7 @@
         <v-dialog v-model="dialog" persistent width="1024">
             <v-card>
                 <v-card-title>
-                    <span class="text-h5">User Profile</span>
+                    <span class="text-h5">{{ title }}</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -49,28 +49,45 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue-darken-1" variant="text" @click="close"> Close </v-btn>
-                    <v-btn color="blue-darken-1" variant="text" @click="close"> Save </v-btn>
+                    <v-btn color="blue-darken-1" variant="text" @click="save"> Save </v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
     </v-row>
 </template>
 <script lang="ts" setup>
+    import { useUsersStore } from '~/store/users';
+
     import { IUser } from '~/types/users/user';
 
     const props = defineProps<{
         show: boolean;
+        add: boolean;
         user: IUser;
     }>();
+    const usersStore = useUsersStore();
+
+    const userInfo = reactive<IUser>(props.user || {});
 
     const dialog = computed(() => props.show);
-    const userInfo = reactive<IUser>(props.user || {});
+    const title = computed(() => (props.add ? 'Add User' : 'User Profile'));
 
     const emit = defineEmits<{
         (e: 'close'): void;
     }>();
 
     function close() {
+        emit('close');
+    }
+
+    function save() {
+        const user = { ...userInfo };
+        if (props.add) {
+            usersStore.addUser(user);
+        } else {
+            usersStore.updateUser(user);
+        }
+
         emit('close');
     }
 </script>
