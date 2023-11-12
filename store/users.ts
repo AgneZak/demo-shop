@@ -57,7 +57,7 @@ export const useUsersStore = defineStore('users', {
                 });
         },
         updateUser(userInfo: IUser) {
-            api({ method: 'patch', url: 'users', data: userInfo, params: { id: userInfo.id } })
+            api({ method: 'patch', url: `users/${userInfo.id}`, data: userInfo })
                 .then((response: AxiosResponse<IUser, any>) => {
                     this.activeUser = response.data;
                     // To see updated user data
@@ -74,9 +74,9 @@ export const useUsersStore = defineStore('users', {
                 });
         },
         deleteUser(userInfo: IUser) {
-            api({ method: 'delete', url: 'users', params: { id: userInfo.id } })
+            api({ method: 'delete', url: `users/${userInfo.id}` })
                 .then((response: AxiosResponse<IUser, any>) => {
-                    const deletedUser = response.data;
+                    const deletedUser = response.data ?? userInfo.id;
                     // To see updated users array
                     const userIndex = this.users.findIndex((user) => {
                         return user.id === deletedUser.id;

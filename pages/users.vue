@@ -10,7 +10,7 @@
                     <v-radio label="ASC" value="asc"></v-radio>
                 </v-radio-group>
             </div>
-            <v-btn class="mt-4 mr-4" color="primary" @click="loadUsers">Get Users</v-btn>
+            <v-btn class="mt-4 mr-4" color="primary" @click="loadUsers">Load Users from database</v-btn>
             <v-btn class="mt-4" color="primary" @click="toggleDialog(initUser, true)">Add User</v-btn>
         </section>
         <v-table density="compact" fixed-header height="calc(60vh - 50px)">
@@ -19,7 +19,9 @@
                     <th class="text-left">ID</th>
                     <th class="text-left">Name</th>
                     <th class="text-left">Email</th>
+                    <th class="text-left">City</th>
                     <th class="text-left">Edit</th>
+                    <th class="text-left">Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,7 +32,10 @@
                     <td>{{ user.id }}</td>
                     <td>{{ user.name.firstname }}</td>
                     <td>{{ user.email }}</td>
+                    <td>{{ user.address.city }}</td>
+
                     <td><v-icon icon="mdi-pen" @click="toggleDialog(user)"></v-icon></td>
+                    <td><v-icon icon="mdi-trash-can-outline" @click="deleteUser(user)"></v-icon></td>
                 </tr>
             </tbody>
         </v-table>
@@ -84,5 +89,9 @@
         Object.assign(dialogUser, useCloneDeep(user));
         addUser.value = add || false;
         showDialog.value = !showDialog.value;
+    }
+
+    function deleteUser(user: IUser) {
+        usersStore.deleteUser(user);
     }
 </script>
