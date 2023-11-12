@@ -1,5 +1,5 @@
 <template>
-    <div xs12 sm8 md4 class="d-flex justify-center mb-6">
+    <div xs12 sm8 md4 class="d-flex justify-center mb-6 mt-6">
         <v-card :class="[mdAndUp ? 'w-50' : 'w-100', 'elevation-12']">
             <v-toolbar dark color="primary">
                 <v-toolbar-title>Login form</v-toolbar-title>
