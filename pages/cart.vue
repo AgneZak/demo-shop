@@ -9,8 +9,10 @@
                     <v-radio label="DESC" value="desc"></v-radio>
                     <v-radio label="ASC" value="asc"></v-radio>
                 </v-radio-group>
+
+                <v-checkbox v-model="showCalendar" label="Pick date range"></v-checkbox>
             </div>
-            <v-row justify="space-around">
+            <v-row v-if="showCalendar" justify="space-around">
                 <v-date-picker v-model="date" :min="minDate" :max="maxDate" multiple @update:model-value="pickDates(date)"></v-date-picker>
             </v-row>
             <v-btn class="mt-4 mr-4" color="primary" @click="loadCarts">Load Carts</v-btn>
@@ -63,6 +65,7 @@
     const limit = ref(0);
     const sort = ref(undefined);
     const date = ref();
+    const showCalendar = ref(false);
     const minDate = ref('2020-01-01');
     const maxDate = ref(new Date().toJSON().slice(0, 10));
 
@@ -71,7 +74,7 @@
     // const dialogUser = reactive<ICart>(useCloneDeep(initUser));
 
     function loadCarts() {
-        cartStore.loadCarts(limit.value, sort.value);
+        cartStore.loadCarts(limit.value, sort.value, date.value);
     }
 
     // function toggleDialog(cart: ICart, add?: boolean) {

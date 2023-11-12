@@ -10,13 +10,18 @@ export const useCartStore = defineStore('cart', {
         activeCart: {} as ICart
     }),
     actions: {
-        loadCarts(limit?: number, sort?: SORT) {
+        loadCarts(limit?: number, sort?: SORT, date?: Date[]) {
+            const startdate = date?.[0].toJSON().slice(0, 10);
+            const enddate = date?.[1].toJSON().slice(0, 10);
+
             api({
                 method: 'get',
                 url: 'carts',
                 params: {
                     limit,
-                    sort
+                    sort,
+                    startdate,
+                    enddate
                 }
             })
                 .then((response: AxiosResponse<ICart[], any>) => {
