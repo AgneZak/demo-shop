@@ -1,32 +1,6 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { api } from '~/composables/api';
-
-interface IUser {
-    id: number;
-    email: string;
-    username: string;
-    password: string;
-    name: {
-        firstname: string;
-        lastname: string;
-    };
-    address: {
-        city: string;
-        street: string;
-        number: number;
-        zipcode: string;
-        geolocation: {
-            lat: string;
-            long: string;
-        };
-    };
-    phone: string;
-}
-
-export enum SORT {
-    DESC = 'desc',
-    ASC = 'asc'
-}
+import { IUser, SORT } from '~/types/users/user';
 
 export const useUsersStore = defineStore('users', {
     state: () => ({
