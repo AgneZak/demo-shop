@@ -9,10 +9,10 @@
                     <v-radio label="DESC" value="desc"></v-radio>
                     <v-radio label="ASC" value="asc"></v-radio>
                 </v-radio-group>
-                <v-row justify="space-around">
-                    <v-date-picker v-model="date" min="2020-01-01" range></v-date-picker>
-                </v-row>
             </div>
+            <v-row justify="space-around">
+                <v-date-picker v-model="date" :min="minDate" :max="maxDate" multiple @update:model-value="pickDates(date)"></v-date-picker>
+            </v-row>
             <v-btn class="mt-4 mr-4" color="primary" @click="loadCarts">Load Carts</v-btn>
             <v-btn class="mt-4" color="primary"> <v-icon icon="mdi-cart-plus"></v-icon> <span class="ml-1">Add Cart</span></v-btn>
         </section>
@@ -63,6 +63,8 @@
     const limit = ref(0);
     const sort = ref(undefined);
     const date = ref();
+    const minDate = ref('2020-01-01');
+    const maxDate = ref(new Date().toJSON().slice(0, 10));
 
     // const showDialog = ref(false);
     // const addUser = ref(false);
@@ -80,6 +82,25 @@
 
     function deleteCart(cart: ICart) {
         cartStore.deleteCart(cart);
+    }
+
+    function pickDates(modelDate: any) {
+        if (modelDate.length > 2) {
+            date.value = undefined;
+            maxDate.value = new Date().toJSON().slice(0, 10);
+            minDate.value = '';
+            return;
+        }
+
+        minDate.value = modelDate[0];
+
+        if (modelDate[1]) {
+            maxDate.value = modelDate[1];
+        }
+
+        if (modelDate.length === 0) {
+            maxDate.value = new Date().toJSON().slice(0, 10);
+        }
     }
 
     cartStore.loadCarts(limit.value, sort.value);
