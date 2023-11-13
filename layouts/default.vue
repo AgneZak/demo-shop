@@ -28,7 +28,7 @@
 
     const menuItems = [
         { text: 'Wishlist', id: 'wishlist', icon: 'mdi-heart' },
-        { text: 'Wishlist Shop', id: 'shop', icon: 'mdi-cart-heart' },
+        { text: 'Wishlist Shop', id: '', icon: 'mdi-cart-heart' },
         { text: 'Manage Carts', id: 'cart', icon: 'mdi-basket-outline' },
         { text: 'Manage Products', id: 'products', icon: 'mdi-package-variant-closed' },
         { text: 'Manage Users', id: 'users', icon: 'mdi-account' }
