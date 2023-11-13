@@ -7,7 +7,7 @@
                 <v-col v-for="product in prepProducts" :key="product.id" cols="12" sm="4">
                     <v-sheet class="ma-2 pa-2">
                         <v-card class="mx-auto" max-width="400" theme="dark">
-                            <v-img class="align-end text-white" height="400" :src="product.image" cover>
+                            <v-img class="align-end text-white bg-white w-full" height="250" :src="product.image">
                                 <v-card-title class="transparent-bg text-body-2 rounded-t-xl">{{ product.title }}</v-card-title>
                             </v-img>
 

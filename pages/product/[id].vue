@@ -15,8 +15,9 @@
     definePageMeta({
         middleware: 'auth'
     });
+
     const route = useRoute();
-    
+
     const productStore = useProductsStore();
     const wishlistStore = useWishlistStore();
 
@@ -35,11 +36,7 @@
     }
 
     function goToShop() {
-        navigateTo('/')
+        navigateTo('/');
     }
 </script>
-<style lang="scss">
-    .transparent-bg {
-        background-color: rgba(#607d8b, 0.8);
-    }
-</style>
+<style lang="scss"></style>
