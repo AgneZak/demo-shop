@@ -39,7 +39,10 @@
 
     const productStore = useProductsStore();
     const wishlistStore = useWishlistStore();
-    productStore.loadProducts();
+
+    if (productStore.products.length <= 0) {
+        productStore.loadProducts();
+    }
 
     const prepProducts = computed(() =>
         productStore.getProducts.map((product) => {
