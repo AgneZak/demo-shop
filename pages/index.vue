@@ -1,8 +1,8 @@
 <template>
     <div>
-        <h1>Welcome to your dashboard</h1>
+        <h1 class="pa-4">Welcome to your Shop</h1>
 
-        <v-container class="bg-surface-variant">
+        <v-container>
             <v-row no-gutters>
                 <v-col v-for="product in prepProducts" :key="product.id" cols="12" sm="4">
                     <v-sheet class="ma-2 pa-2">
@@ -19,7 +19,7 @@
                             </v-card-text>
                             <v-card-actions>
                                 <v-btn color="primary"> More </v-btn>
-                                <v-btn color="red"> <v-icon :icon="product.icon"></v-icon> </v-btn>
+                                <v-btn color="red" @click="toggleWishlist(product.id)"> <v-icon :icon="product.icon"></v-icon> </v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-sheet>
@@ -47,6 +47,11 @@
             return { ...product, icon };
         })
     );
+
+    function toggleWishlist(id: number) {
+        const hearted = wishlistStore.wishlist.find((wishId) => wishId === id);
+        hearted ? wishlistStore.removeFromWishlist(id) : wishlistStore.addToWishlist(id);
+    }
 </script>
 <style lang="scss">
     .transparent-bg {
