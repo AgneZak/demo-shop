@@ -16,7 +16,10 @@
                 <v-date-picker v-model="date" :min="minDate" :max="maxDate" multiple @update:model-value="pickDates(date)"></v-date-picker>
             </v-row>
             <v-btn class="mt-4 mr-4" color="primary" @click="loadCarts">Load Carts</v-btn>
-            <v-btn class="mt-4" color="primary"> <v-icon icon="mdi-cart-plus"></v-icon> <span class="ml-1">Add Cart</span></v-btn>
+            <v-btn class="mt-4" color="primary" @click="toggleDialog(initCart, true)">
+                <v-icon icon="mdi-cart-plus"></v-icon>
+                <span class="ml-1">Add Cart</span>
+            </v-btn>
         </section>
         <v-table density="compact" fixed-header height="calc(60vh - 50px)">
             <thead>
@@ -63,6 +66,8 @@
         middleware: 'auth'
     });
 
+    const initCart = { id: 0, userId: 0, date: new Date(), products: [] };
+
     const cartStore = useCartStore();
     const limit = ref(0);
     const sort = ref(undefined);
@@ -73,7 +78,7 @@
 
     const showDialog = ref(false);
     const addCart = ref(false);
-    const dialogCart = reactive<ICart>({ id: 0, userId: 0, date: new Date(), products: [] } as ICart);
+    const dialogCart = reactive<ICart>(useCloneDeep(initCart));
 
     function loadCarts() {
         cartStore.loadCarts(limit.value, sort.value, date.value);
