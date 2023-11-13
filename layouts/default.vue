@@ -26,14 +26,17 @@
     import { useDisplay } from 'vuetify';
     import { useAuthStore } from '~/store/auth';
 
-    const { mobile } = useDisplay();
     const menuItems = [
         { text: 'Cart', id: 'cart', icon: 'mdi-cart-outline' },
         { text: 'Products', id: 'products', icon: 'mdi-package-variant-closed' },
         { text: 'Users', id: 'users', icon: 'mdi-account' }
     ];
-    const drawer = ref(true);
+
+    const { mobile } = useDisplay();
+
     const authStore = useAuthStore();
+
+    const drawer = ref(true);
 
     function goTo(id: string) {
         navigateTo(`/${id}`);
