@@ -28,9 +28,10 @@
 
     const menuItems = [
         { text: 'Wishlist', id: 'wishlist', icon: 'mdi-heart' },
-        { text: 'Carts', id: 'cart', icon: 'mdi-cart-outline' },
-        { text: 'Products', id: 'products', icon: 'mdi-package-variant-closed' },
-        { text: 'Users', id: 'users', icon: 'mdi-account' }
+        { text: 'Wishlist Shop', id: 'shop', icon: 'mdi-cart-heart' },
+        { text: 'Manage Carts', id: 'cart', icon: 'mdi-basket-outline' },
+        { text: 'Manage Products', id: 'products', icon: 'mdi-package-variant-closed' },
+        { text: 'Manage Users', id: 'users', icon: 'mdi-account' }
     ];
 
     const { mobile } = useDisplay();
