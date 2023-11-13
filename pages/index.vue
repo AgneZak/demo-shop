@@ -39,7 +39,7 @@
 
     const productStore = useProductsStore();
     const wishlistStore = useWishlistStore();
-
+    // To see changes from product management - do not reload if filled
     if (productStore.products.length <= 0) {
         productStore.loadProducts();
     }
