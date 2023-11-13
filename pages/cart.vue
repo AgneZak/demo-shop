@@ -45,11 +45,13 @@
                             </v-chip></template
                         >
                     </td>
-                    <td><v-icon icon="mdi-pen"></v-icon></td>
+                    <td><v-icon icon="mdi-pen" @click="toggleDialog(cart)"></v-icon></td>
                     <td><v-icon icon="mdi-cart-off" @click="deleteCart(cart)"></v-icon></td>
                 </tr>
             </tbody>
         </v-table>
+
+        <CartModal :show="showDialog" :cart="dialogCart" :add="addCart" @close="toggleDialog({} as ICart)"></CartModal>
     </div>
 </template>
 
@@ -69,19 +71,19 @@
     const minDate = ref('2020-01-01');
     const maxDate = ref(new Date().toJSON().slice(0, 10));
 
-    // const showDialog = ref(false);
-    // const addUser = ref(false);
-    // const dialogUser = reactive<ICart>(useCloneDeep(initUser));
+    const showDialog = ref(false);
+    const addCart = ref(false);
+    const dialogCart = reactive<ICart>({ id: 0, userId: 0, date: new Date(), products: [] } as ICart);
 
     function loadCarts() {
         cartStore.loadCarts(limit.value, sort.value, date.value);
     }
 
-    // function toggleDialog(cart: ICart, add?: boolean) {
-    //     Object.assign(dialogUser, useCloneDeep(cart));
-    //     addUser.value = add || false;
-    //     showDialog.value = !showDialog.value;
-    // }
+    function toggleDialog(cart: ICart, add?: boolean) {
+        Object.assign(dialogCart, useCloneDeep(cart));
+        addCart.value = add || false;
+        showDialog.value = !showDialog.value;
+    }
 
     function deleteCart(cart: ICart) {
         cartStore.deleteCart(cart);
