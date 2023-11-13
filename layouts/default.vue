@@ -1,6 +1,6 @@
 <template>
     <v-layout class="rounded rounded-md">
-        <v-app-bar title="Shop">
+        <v-app-bar title="Management">
             <template #prepend>
                 <v-app-bar-nav-icon color="primary" @click.stop="drawer = !drawer"> <v-icon icon="mdi-menu"></v-icon> </v-app-bar-nav-icon>
             </template>
@@ -27,7 +27,8 @@
     import { useAuthStore } from '~/store/auth';
 
     const menuItems = [
-        { text: 'Cart', id: 'cart', icon: 'mdi-cart-outline' },
+        { text: 'Wishlist', id: 'wishlist', icon: 'mdi-heart' },
+        { text: 'Carts', id: 'cart', icon: 'mdi-cart-outline' },
         { text: 'Products', id: 'products', icon: 'mdi-package-variant-closed' },
         { text: 'Users', id: 'users', icon: 'mdi-account' }
     ];
