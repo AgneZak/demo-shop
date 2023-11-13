@@ -27,7 +27,7 @@ export const useProductsStore = defineStore('products', {
                     console.error(error);
                 });
         },
-        getProductById(id: number) {
+        getProductById(id: number): IProduct | undefined {
             const product = this.products.find((product) => product.id === id);
 
             if (product) {

@@ -12,7 +12,7 @@
             </div>
 
             <v-btn class="mt-4 mr-4" color="primary" @click="loadProducts">Load Products</v-btn>
-            <v-btn class="mt-4" color="primary">
+            <v-btn class="mt-4" color="primary" @click="toggleDialog(initProduct, true)">
                 <v-icon icon="mdi-package-variant-closed-plus"></v-icon>
                 <span class="ml-1">Add Product</span>
             </v-btn>
