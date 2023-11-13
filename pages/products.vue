@@ -60,11 +60,12 @@
                             ></v-textarea
                         ></v-container>
                     </td>
-                    <td><v-icon icon="mdi-pen"></v-icon></td>
+                    <td><v-icon icon="mdi-pen" @click="toggleDialog(product)"></v-icon></td>
                     <td><v-icon icon="mdi-package-variant-closed-remove" @click="deleteProduct(product)"></v-icon></td>
                 </tr>
             </tbody>
         </v-table>
+        <ProductModal :show="showDialog" :product="dialogProduct" :add="addProduct" @close="toggleDialog({} as IProduct)"></ProductModal>
     </div>
 </template>
 
@@ -76,23 +77,32 @@
         middleware: 'auth'
     });
 
+    const initProduct = {
+        id: 0,
+        title: '',
+        price: '',
+        category: '',
+        description: '',
+        image: ''
+    };
+
     const productStore = useProductsStore();
     const limit = ref(0);
     const sort = ref(undefined);
 
-    // const showDialog = ref(false);
-    // const addProduct = ref(false);
-    // const dialogProduct = reactive<IProduct>(useCloneDeep(initProduct));
+    const showDialog = ref(false);
+    const addProduct = ref(false);
+    const dialogProduct = reactive<IProduct>(useCloneDeep(initProduct));
 
     function loadProducts() {
         productStore.loadProducts(limit.value, sort.value);
     }
 
-    // function toggleDialog(product: IProduct, add?: boolean) {
-    //     Object.assign(dialogProduct, useCloneDeep(product));
-    //     addProduct.value = add || false;
-    //     showDialog.value = !showDialog.value;
-    // }
+    function toggleDialog(product: IProduct, add?: boolean) {
+        Object.assign(dialogProduct, useCloneDeep(product));
+        addProduct.value = add || false;
+        showDialog.value = !showDialog.value;
+    }
 
     function deleteProduct(product: IProduct) {
         productStore.deleteProduct(product);

@@ -7,6 +7,7 @@ import { SORT } from '~/types/shared';
 export const useProductsStore = defineStore('products', {
     state: () => ({
         products: [] as IProduct[],
+        categories: [] as string[],
         activeProduct: {} as IProduct
     }),
     actions: {
@@ -91,11 +92,29 @@ export const useProductsStore = defineStore('products', {
                 .catch((error: AxiosError) => {
                     console.error(error);
                 });
+        },
+        loadCategories() {
+            if (this.categories.length > 0) {
+                return;
+            }
+            api({
+                method: 'get',
+                url: 'products/categories'
+            })
+                .then((response: AxiosResponse<string[], any>) => {
+                    this.categories = response.data;
+                })
+                .catch((error: AxiosError) => {
+                    console.error(error);
+                });
         }
     },
     getters: {
         getProducts(): IProduct[] {
             return this.products;
+        },
+        getCategories(): string[] {
+            return this.categories;
         }
     }
 });
