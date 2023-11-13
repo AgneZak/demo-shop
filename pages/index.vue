@@ -3,6 +3,7 @@
         <h1 class="pa-4">Welcome to your Shop</h1>
 
         <v-container>
+            <product-filters @search-filter="searchByTitle" @search-category="searchByCategory"></product-filters>
             <v-row no-gutters>
                 <v-col v-for="product in prepProducts" :key="product.id" cols="12" sm="4">
                     <v-sheet class="ma-2 pa-2">
@@ -43,18 +44,37 @@
     if (productStore.products.length <= 0) {
         productStore.loadProducts();
     }
+    const searchFilter = ref();
+    const searchCategory = ref();
 
-    const prepProducts = computed(() =>
-        productStore.getProducts.map((product) => {
+    const prepProducts = computed(() => {
+        let products = productStore.getProducts.map((product) => {
             const hearted = wishlistStore.wishlist.find((id) => product.id === id);
             const icon = hearted ? 'mdi-heart-off' : 'mdi-heart-plus-outline';
             return { ...product, icon };
-        })
-    );
+        });
+
+        if (searchFilter.value) {
+            products = products.filter((product) => product.title.toLowerCase().includes(searchFilter.value.toLowerCase()));
+        }
+        if (searchCategory.value) {
+            products = products.filter((product) => product.category === searchCategory.value);
+        }
+
+        return products;
+    });
 
     function toggleWishlist(id: number) {
         const hearted = wishlistStore.wishlist.find((wishId) => wishId === id);
         hearted ? wishlistStore.removeFromWishlist(id) : wishlistStore.addToWishlist(id);
+    }
+
+    function searchByTitle(filter: string) {
+        searchFilter.value = filter;
+    }
+
+    function searchByCategory(filter: string) {
+        searchCategory.value = filter;
     }
 
     function goToProduct(id: number) {
