@@ -12,6 +12,12 @@
                                 <v-text-field v-model="productInfo.id" label="Product ID" hint="Readonly" readonly></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="6" md="4">
+                                <v-text-field v-model="productInfo.title" label="Title" hint="Add title"></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4">
+                                <v-text-field v-model="productInfo.price" label="Price" hint="Add price"></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6">
                                 <v-text-field v-model="productInfo.image" label="Image" hint="Add image url"></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="6" md="4">
@@ -19,7 +25,7 @@
                                     v-if="product.image"
                                     :alt="product.title"
                                     :src="product.image"
-                                    width="150"
+                                    width="120"
                                     aspect-ratio="4/3"
                                 ></v-img>
                             </v-col>
@@ -32,7 +38,7 @@
                                 ></v-select
                             ></v-col>
                             <v-col cols="12">
-                                <v-textarea v-model="productInfo.description" label="Description" no-resize rows="4"></v-textarea>
+                                <v-textarea v-model="productInfo.description" label="Description" no-resize rows="3"></v-textarea>
                             </v-col>
                         </v-row>
                     </v-container>
