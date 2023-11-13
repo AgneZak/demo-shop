@@ -3,7 +3,7 @@
         <section class="pa-4">
             <h1>Wishlist</h1>
             <div class="d-flex mt-4">
-                <v-select v-model="wishlistSelect" :items="productStore.getProducts" item-value="id" label="Choose item to Add"></v-select>
+                <v-select v-model="wishlistSelect" :items="wishlistSelectProducts" item-value="id" label="Choose item to Add"></v-select>
             </div>
 
             <v-btn class="mt-4" color="primary" @click="addToWishlist">
@@ -56,6 +56,9 @@
 
     const wishlistSelect = ref<number>();
 
+    const wishlistSelectProducts = computed(() => {
+        return productStore.getProducts.filter((product) => !wishlistStore.wishlist.includes(product.id));
+    });
     const wishlistItems = computed(() => {
         return wishlistStore.wishlist.map((id) => productStore.getProductById(id));
     });
