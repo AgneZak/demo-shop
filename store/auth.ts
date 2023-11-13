@@ -28,6 +28,11 @@ export const useAuthStore = defineStore('auth', {
                 .catch((error: AxiosError) => {
                     console.error(error);
                 });
+        },
+        logout() {
+            const token = useCookie('token');
+            this.active = false;
+            token.value = null;
         }
     }
 });

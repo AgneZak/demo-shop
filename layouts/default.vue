@@ -4,7 +4,7 @@
             <template #prepend>
                 <v-app-bar-nav-icon color="primary" @click.stop="drawer = !drawer"> <v-icon icon="mdi-menu"></v-icon> </v-app-bar-nav-icon>
             </template>
-            <v-btn color="primary"> <v-icon icon="mdi-logout"></v-icon> </v-btn>
+            <v-btn color="primary" @click="logout"> <v-icon icon="mdi-logout"></v-icon> </v-btn>
         </v-app-bar>
         <v-navigation-drawer v-model="drawer" :permanent="!mobile" :temporary="mobile">
             <v-list>
@@ -24,6 +24,7 @@
 </template>
 <script setup lang="ts">
     import { useDisplay } from 'vuetify';
+    import { useAuthStore } from '~/store/auth';
 
     const { mobile } = useDisplay();
     const menuItems = [
@@ -32,9 +33,15 @@
         { text: 'Users', id: 'users', icon: 'mdi-account' }
     ];
     const drawer = ref(true);
+    const authStore = useAuthStore();
 
     function goTo(id: string) {
         navigateTo(`/${id}`);
+    }
+
+    function logout() {
+        authStore.logout();
+        navigateTo('/login');
     }
 </script>
 <style lang="scss">
