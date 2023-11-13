@@ -43,7 +43,8 @@
                     <td>
                         <template v-for="product in cart.products" :key="product.produtId">
                             <v-chip color="primary">
-                                <v-icon icon="mdi-package-variant"></v-icon><span>{{ product.productId }} &</span>
+                                <v-icon icon="mdi-package-variant"></v-icon>
+                                <span>{{ productStore.getProductById(product.productId)?.title || product.productId }} & </span>
                                 <span>& Quantity: {{ product.quantity }}</span>
                             </v-chip></template
                         >
@@ -60,6 +61,8 @@
 
 <script setup lang="ts">
     import { useCartStore } from '~/store/cart';
+    import { useProductsStore } from '~/store/products';
+
     import { ICart } from '~/types/carts/cart';
 
     definePageMeta({
@@ -69,6 +72,8 @@
     const initCart = { id: 0, userId: 0, date: new Date(), products: [] };
 
     const cartStore = useCartStore();
+    const productStore = useProductsStore();
+
     const limit = ref(0);
     const sort = ref(undefined);
     const date = ref();
@@ -114,4 +119,5 @@
     }
 
     cartStore.loadCarts(limit.value, sort.value);
+    productStore.loadProducts();
 </script>
