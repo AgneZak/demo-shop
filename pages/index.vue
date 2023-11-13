@@ -18,7 +18,7 @@
                                 </div>
                             </v-card-text>
                             <v-card-actions>
-                                <v-btn color="primary"> More </v-btn>
+                                <v-btn color="primary" @click="goToProduct(product.id)"> More </v-btn>
                                 <v-btn color="red" @click="toggleWishlist(product.id)"> <v-icon :icon="product.icon"></v-icon> </v-btn>
                             </v-card-actions>
                         </v-card>
@@ -39,6 +39,7 @@
 
     const productStore = useProductsStore();
     const wishlistStore = useWishlistStore();
+    productStore.loadProducts();
 
     const prepProducts = computed(() =>
         productStore.getProducts.map((product) => {
@@ -51,6 +52,10 @@
     function toggleWishlist(id: number) {
         const hearted = wishlistStore.wishlist.find((wishId) => wishId === id);
         hearted ? wishlistStore.removeFromWishlist(id) : wishlistStore.addToWishlist(id);
+    }
+
+    function goToProduct(id: number) {
+        navigateTo(`/product/${id}`);
     }
 </script>
 <style lang="scss">
