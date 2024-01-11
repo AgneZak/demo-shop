@@ -82,7 +82,7 @@ export const useCartStore = defineStore('cart', {
         },
         deleteCart(cartInfo: ICart) {
             api({ method: 'delete', url: `carts/${cartInfo.id}` })
-                .then((response: AxiosResponse<{ id: number }, any>) => {
+                .then((response: AxiosResponse<{ id: number }>) => {
                     const deletedCart = response.data ?? cartInfo;
                     // To see updated carts array
                     const cartIndex = this.carts.findIndex((cart) => {

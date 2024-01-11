@@ -41,6 +41,7 @@
     const productStore = useProductsStore();
     const wishlistStore = useWishlistStore();
     // To see changes from product management - do not reload if filled
+    // fake api so would need to save to local storage
     if (productStore.products.length <= 0) {
         productStore.loadProducts();
     }

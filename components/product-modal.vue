@@ -55,7 +55,7 @@
 <script lang="ts" setup>
     import { useProductsStore } from '~/store/products';
     import { IProduct } from '~/types/products/product';
-
+    // TO DO: Make template modal to reuse logic
     const props = defineProps<{
         show: boolean;
         add: boolean;
@@ -78,11 +78,7 @@
 
     function save() {
         const product = useCloneDeep(productInfo);
-        if (props.add) {
-            productStore.addProduct(product);
-        } else {
-            productStore.updateProduct(product);
-        }
+        props.add ? productStore.addProduct(product) : productStore.updateProduct(product);
 
         emit('close');
     }

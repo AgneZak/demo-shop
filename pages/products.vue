@@ -77,6 +77,7 @@
         middleware: 'auth'
     });
 
+    // TO DO: combine users/products/carts to one component to be reused
     const initProduct = {
         id: 0,
         title: '',

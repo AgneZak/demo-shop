@@ -20,7 +20,7 @@ export const useProductsStore = defineStore('products', {
                     sort
                 }
             })
-                .then((response: AxiosResponse<IProduct[], any>) => {
+                .then((response: AxiosResponse<IProduct[]>) => {
                     this.products = response.data;
                 })
                 .catch((error: AxiosError) => {
@@ -41,7 +41,7 @@ export const useProductsStore = defineStore('products', {
                     id
                 }
             })
-                .then((response: AxiosResponse<IProduct, any>) => {
+                .then((response: AxiosResponse<IProduct>) => {
                     return (this.activeProduct = response.data);
                 })
                 .catch((error: AxiosError) => {
@@ -50,7 +50,7 @@ export const useProductsStore = defineStore('products', {
         },
         addProduct(productInfo: IProduct) {
             api({ method: 'post', url: 'products', data: productInfo })
-                .then((response: AxiosResponse<IProduct, any>) => {
+                .then((response: AxiosResponse<IProduct>) => {
                     this.activeProduct = response.data;
                     // To see added user because of faked API
                     this.products.push({ ...productInfo, ...response.data });
@@ -61,7 +61,7 @@ export const useProductsStore = defineStore('products', {
         },
         updateProduct(productInfo: IProduct) {
             api({ method: 'patch', url: `products/${productInfo.id}`, data: productInfo })
-                .then((response: AxiosResponse<IProduct, any>) => {
+                .then((response: AxiosResponse<IProduct>) => {
                     this.activeProduct = response.data;
                     // To see updated user data
                     const userIndex = this.products.findIndex((product) => {
@@ -78,7 +78,7 @@ export const useProductsStore = defineStore('products', {
         },
         deleteProduct(productInfo: IProduct) {
             api({ method: 'delete', url: `products/${productInfo.id}` })
-                .then((response: AxiosResponse<{ id: number }, any>) => {
+                .then((response: AxiosResponse<{ id: number }>) => {
                     const deletedProduct = response.data ?? productInfo;
                     // To see updated products array
                     const productIndex = this.products.findIndex((product) => {
@@ -101,7 +101,7 @@ export const useProductsStore = defineStore('products', {
                 method: 'get',
                 url: 'products/categories'
             })
-                .then((response: AxiosResponse<string[], any>) => {
+                .then((response: AxiosResponse<string[]>) => {
                     this.categories = response.data;
                 })
                 .catch((error: AxiosError) => {

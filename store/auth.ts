@@ -20,7 +20,7 @@ export const useAuthStore = defineStore('auth', {
         },
         login(loginParams: IUserParams) {
             api({ method: 'post', url: 'auth/login', data: loginParams })
-                .then((response: AxiosResponse<{ token: string }, any>) => {
+                .then((response: AxiosResponse<{ token: string }>) => {
                     const token = response.data.token;
                     this.signInWithToken(token);
                     navigateTo('/');
