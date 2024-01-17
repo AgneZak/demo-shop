@@ -1,4 +1,4 @@
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError } from 'axios';
 import { api } from '~/composables/api';
 
 import { ICart } from '~/types/carts/cart';
@@ -14,7 +14,7 @@ export const useCartStore = defineStore('cart', {
             const startdate = date?.[0].toJSON().slice(0, 10);
             const enddate = date?.[1].toJSON().slice(0, 10);
 
-            api({
+            api<ICart[]>({
                 method: 'get',
                 url: 'carts',
                 params: {
@@ -24,7 +24,7 @@ export const useCartStore = defineStore('cart', {
                     enddate
                 }
             })
-                .then((response: AxiosResponse<ICart[], any>) => {
+                .then((response) => {
                     this.carts = response.data;
                 })
                 .catch((error: AxiosError) => {
@@ -38,14 +38,14 @@ export const useCartStore = defineStore('cart', {
                 return (this.activeCart = cart);
             }
 
-            api({
+            api<ICart>({
                 method: 'get',
                 url: 'carts',
                 params: {
                     id
                 }
             })
-                .then((response: AxiosResponse<ICart, any>) => {
+                .then((response) => {
                     return (this.activeCart = response.data);
                 })
                 .catch((error: AxiosError) => {
@@ -53,8 +53,8 @@ export const useCartStore = defineStore('cart', {
                 });
         },
         addCart(cartInfo: ICart) {
-            api({ method: 'post', url: 'carts', data: cartInfo })
-                .then((response: AxiosResponse<ICart, any>) => {
+            api<ICart, ICart>({ method: 'post', url: 'carts', data: cartInfo })
+                .then((response) => {
                     this.activeCart = response.data;
                     // To see added user because of faked API
                     this.carts.push({ ...cartInfo, ...response.data });
@@ -64,8 +64,8 @@ export const useCartStore = defineStore('cart', {
                 });
         },
         updateCart(cartInfo: ICart) {
-            api({ method: 'patch', url: `carts/${cartInfo.id}`, data: cartInfo })
-                .then((response: AxiosResponse<ICart, any>) => {
+            api<ICart, ICart>({ method: 'patch', url: `carts/${cartInfo.id}`, data: cartInfo })
+                .then((response) => {
                     this.activeCart = response.data;
                     // To see updated user data
                     const userIndex = this.carts.findIndex((cart) => {
@@ -81,8 +81,8 @@ export const useCartStore = defineStore('cart', {
                 });
         },
         deleteCart(cartInfo: ICart) {
-            api({ method: 'delete', url: `carts/${cartInfo.id}` })
-                .then((response: AxiosResponse<{ id: number }>) => {
+            api<{ id: number }, ICart>({ method: 'delete', url: `carts/${cartInfo.id}` })
+                .then((response) => {
                     const deletedCart = response.data ?? cartInfo;
                     // To see updated carts array
                     const cartIndex = this.carts.findIndex((cart) => {

@@ -1,4 +1,4 @@
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError } from 'axios';
 import { api } from '~/composables/api';
 import { IUser } from '~/types/users/user';
 import { SORT } from '~/types/shared';
@@ -10,7 +10,7 @@ export const useUsersStore = defineStore('users', {
     }),
     actions: {
         loadUsers(limit?: number, sort?: SORT) {
-            api({
+            api<IUser[]>({
                 method: 'get',
                 url: 'users',
                 params: {
@@ -18,7 +18,7 @@ export const useUsersStore = defineStore('users', {
                     sort
                 }
             })
-                .then((response: AxiosResponse<IUser[]>) => {
+                .then((response) => {
                     this.users = response.data;
                 })
                 .catch((error: AxiosError) => {
@@ -32,14 +32,14 @@ export const useUsersStore = defineStore('users', {
                 return (this.activeUser = user);
             }
 
-            api({
+            api<IUser>({
                 method: 'get',
                 url: 'users',
                 params: {
                     id
                 }
             })
-                .then((response: AxiosResponse<IUser>) => {
+                .then((response) => {
                     return (this.activeUser = response.data);
                 })
                 .catch((error: AxiosError) => {
@@ -47,8 +47,8 @@ export const useUsersStore = defineStore('users', {
                 });
         },
         addUser(userInfo: IUser) {
-            api({ method: 'post', url: 'users', data: userInfo })
-                .then((response: AxiosResponse<IUser>) => {
+            api<IUser, IUser>({ method: 'post', url: 'users', data: userInfo })
+                .then((response) => {
                     this.activeUser = response.data;
                     // To see added user because of faked API
                     this.users.push({ ...userInfo, ...response.data });
@@ -58,8 +58,8 @@ export const useUsersStore = defineStore('users', {
                 });
         },
         updateUser(userInfo: IUser) {
-            api({ method: 'patch', url: `users/${userInfo.id}`, data: userInfo })
-                .then((response: AxiosResponse<IUser>) => {
+            api<IUser, IUser>({ method: 'patch', url: `users/${userInfo.id}`, data: userInfo })
+                .then((response) => {
                     this.activeUser = response.data;
                     // To see updated user data
                     const userIndex = this.users.findIndex((user) => {
@@ -75,8 +75,8 @@ export const useUsersStore = defineStore('users', {
                 });
         },
         deleteUser(userInfo: IUser) {
-            api({ method: 'delete', url: `users/${userInfo.id}` })
-                .then((response: AxiosResponse<IUser>) => {
+            api<IUser>({ method: 'delete', url: `users/${userInfo.id}` })
+                .then((response) => {
                     const deletedUser = response.data ?? userInfo;
                     // To see updated users array
                     const userIndex = this.users.findIndex((user) => {
