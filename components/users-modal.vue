@@ -59,7 +59,7 @@
     import { useUsersStore } from '~/store/users';
 
     import { IUser } from '~/types/users/user';
-
+    // TO DO: Make template modal to reuse logic
     const props = defineProps<{
         show: boolean;
         add: boolean;
@@ -82,11 +82,7 @@
 
     function save() {
         const user = useCloneDeep(userInfo);
-        if (props.add) {
-            usersStore.addUser(user);
-        } else {
-            usersStore.updateUser(user);
-        }
+        props.add ? usersStore.addUser(user) : usersStore.updateUser(user);
 
         emit('close');
     }

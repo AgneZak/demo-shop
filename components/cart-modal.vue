@@ -97,15 +97,16 @@
     function updateQuantity(product: any, add: boolean) {
         add ? product.quantity++ : product.quantity--;
 
-        if (product.quantity <= 0) {
-            const productIndex = cartInfo.products.findIndex((cartProduct) => {
-                return cartProduct.productId === product.productId;
-            });
-
-            if (productIndex !== -1) {
-                cartInfo.products.splice(productIndex, 1);
-            }
+        if (product.quantity > 0) {
+            return;
         }
+
+        const productIndex = cartInfo.products.findIndex((cartProduct) => cartProduct.productId === product.productId);
+
+        if (productIndex === -1) {
+            return;
+        }
+        cartInfo.products.splice(productIndex, 1);
     }
 
     function addProduct(val: any) {

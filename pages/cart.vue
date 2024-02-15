@@ -69,6 +69,7 @@
         middleware: 'auth'
     });
 
+    // TO DO: combine users/products/carts to one component to be reused
     const initCart = { id: 0, userId: 0, date: new Date(), products: [] };
 
     const cartStore = useCartStore();

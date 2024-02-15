@@ -56,18 +56,17 @@
 
     const wishlistSelect = ref<number>();
 
-    const wishlistSelectProducts = computed(() => {
-        return productStore.getProducts.filter((product) => !wishlistStore.wishlist.includes(product.id));
-    });
-    const wishlistItems = computed(() => {
-        return wishlistStore.wishlist.map((id) => productStore.getProductById(id));
-    });
+    const wishlistSelectProducts = computed(() =>
+        productStore.getProducts.filter((product) => !wishlistStore.wishlist.includes(product.id))
+    );
+    const wishlistItems = computed(() => wishlistStore.wishlist.map((id) => productStore.getProductById(id)));
 
     function addToWishlist() {
-        if (wishlistSelect.value) {
-            wishlistStore.addToWishlist(wishlistSelect.value);
-            wishlistSelect.value = undefined;
+        if (!wishlistSelect.value) {
+            return;
         }
+        wishlistStore.addToWishlist(wishlistSelect.value);
+        wishlistSelect.value = undefined;
     }
 
     function removeFromWishlist(id: number) {

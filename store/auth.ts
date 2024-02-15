@@ -1,4 +1,4 @@
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError } from 'axios';
 import { api } from '~/composables/api';
 
 interface IUserParams {
@@ -19,8 +19,8 @@ export const useAuthStore = defineStore('auth', {
             this.authToken = tokenValue;
         },
         login(loginParams: IUserParams) {
-            api({ method: 'post', url: 'auth/login', data: loginParams })
-                .then((response: AxiosResponse<{ token: string }, any>) => {
+            api<{ token: string }, IUserParams>({ method: 'post', url: 'auth/login', data: loginParams })
+                .then((response) => {
                     const token = response.data.token;
                     this.signInWithToken(token);
                     navigateTo('/');

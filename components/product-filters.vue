@@ -57,14 +57,16 @@
     function sortByPrice() {
         switch (priceSort.value) {
             case 0:
-                productStore.products.sort((p1, p2) => (p1.price > p2.price ? 1 : p1.price < p2.price ? -1 : 0));
+                productStore.products.sort(sortPriceFn);
                 break;
             case 1:
-                productStore.products.sort((p1, p2) => (p1.price < p2.price ? 1 : p1.price > p2.price ? -1 : 0));
+                productStore.products.sort(sortPriceFn);
                 break;
             default:
                 productStore.products.sort((p1, p2) => p1.id - p2.id);
                 break;
         }
     }
+
+    const sortPriceFn = (p1, p2) => (p1.price > p2.price ? 1 : p1.price < p2.price ? -1 : 0);
 </script>
