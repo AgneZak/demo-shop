@@ -1,9 +1,17 @@
 <template>
-    <NuxtLayout :name="layout">
-        <NuxtPage />
-    </NuxtLayout>
+    <v-app>
+        <NuxtLayout :name="layout">
+            <NuxtPage />
+        </NuxtLayout>
+        <v-footer absolute height="40px">
+            <v-row justify="center" no-gutters> &copy; {{ new Date().getFullYear() }} </v-row>
+        </v-footer>
+    </v-app>
 </template>
 <script setup lang="ts">
-    // You might choose this based on an API call or logged-in status
-    const layout = 'login';
+    import { useAuthStore } from './store/auth';
+
+    const authStore = useAuthStore();
+
+    const layout = authStore.active ? 'default' : 'login';
 </script>
