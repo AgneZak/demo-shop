@@ -17,8 +17,8 @@
                             <v-col cols="12">
                                 <template v-for="product in cartInfo.products" :key="product.produtId">
                                     <v-chip color="primary">
-                                        <v-icon icon="mdi-package-variant"></v-icon
-                                        ><span>{{ productStore.getProductById(product.productId)?.title || product.productId }} &</span>
+                                        <v-icon icon="mdi-package-variant"></v-icon>
+                                        <span>{{ productStore.getProductById(product.productId)?.title || product.productId }} &</span>
                                         <span>& Quantity: {{ product.quantity }}</span>
                                         <template #append>
                                             <v-btn class="ml-1" icon color="primary" @click="updateQuantity(product, false)">

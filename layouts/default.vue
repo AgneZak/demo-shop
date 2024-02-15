@@ -1,7 +1,12 @@
 <template>
     <v-layout class="rounded rounded-md">
-        <v-app-bar title="Shop"></v-app-bar>
-        <v-navigation-drawer permanent>
+        <v-app-bar title="Shop">
+            <template #prepend>
+                <v-app-bar-nav-icon color="primary" @click.stop="drawer = !drawer"> <v-icon icon="mdi-menu"></v-icon> </v-app-bar-nav-icon>
+            </template>
+            <v-btn color="primary" @click="logout"> <v-icon icon="mdi-logout"></v-icon> </v-btn>
+        </v-app-bar>
+        <v-navigation-drawer v-model="drawer" :permanent="!mobile" :temporary="mobile">
             <v-list>
                 <v-list-subheader>Menu</v-list-subheader>
 
@@ -18,14 +23,28 @@
     </v-layout>
 </template>
 <script setup lang="ts">
+    import { useDisplay } from 'vuetify';
+    import { useAuthStore } from '~/store/auth';
+
     const menuItems = [
         { text: 'Cart', id: 'cart', icon: 'mdi-cart-outline' },
         { text: 'Products', id: 'products', icon: 'mdi-package-variant-closed' },
         { text: 'Users', id: 'users', icon: 'mdi-account' }
     ];
 
+    const { mobile } = useDisplay();
+
+    const authStore = useAuthStore();
+
+    const drawer = ref(true);
+
     function goTo(id: string) {
         navigateTo(`/${id}`);
+    }
+
+    function logout() {
+        authStore.logout();
+        navigateTo('/login');
     }
 </script>
 <style lang="scss">
