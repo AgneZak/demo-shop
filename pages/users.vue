@@ -96,4 +96,6 @@
     function deleteUser(user: IUser) {
         usersStore.deleteUser(user);
     }
+
+    usersStore.loadUsers(limit.value, sort.value);
 </script>

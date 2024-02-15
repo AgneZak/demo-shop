@@ -1,6 +1,6 @@
 <template>
     <v-layout class="rounded rounded-md">
-        <v-app-bar title="Shop">
+        <v-app-bar title="Management">
             <template #prepend>
                 <v-app-bar-nav-icon color="primary" @click.stop="drawer = !drawer"> <v-icon icon="mdi-menu"></v-icon> </v-app-bar-nav-icon>
             </template>
@@ -27,9 +27,11 @@
     import { useAuthStore } from '~/store/auth';
 
     const menuItems = [
-        { text: 'Cart', id: 'cart', icon: 'mdi-cart-outline' },
-        { text: 'Products', id: 'products', icon: 'mdi-package-variant-closed' },
-        { text: 'Users', id: 'users', icon: 'mdi-account' }
+        { text: 'Wishlist', id: 'wishlist', icon: 'mdi-heart' },
+        { text: 'Wishlist Shop', id: '', icon: 'mdi-cart-heart' },
+        { text: 'Manage Carts', id: 'cart', icon: 'mdi-basket-outline' },
+        { text: 'Manage Products', id: 'products', icon: 'mdi-package-variant-closed' },
+        { text: 'Manage Users', id: 'users', icon: 'mdi-account' }
     ];
 
     const { mobile } = useDisplay();
@@ -50,6 +52,7 @@
 <style lang="scss">
     .full-height {
         height: calc(100vh - 40px);
+        overflow: auto;
         overflow: auto;
     }
 </style>
