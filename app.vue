@@ -13,5 +13,5 @@
 
     const authStore = useAuthStore();
 
-    const layout = authStore.active ? 'default' : 'login';
+    const layout = computed(() => (authStore.active ? 'default' : 'login'));
 </script>

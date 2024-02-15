@@ -17,7 +17,8 @@
                             <v-col cols="12">
                                 <template v-for="product in cartInfo.products" :key="product.produtId">
                                     <v-chip color="primary">
-                                        <v-icon icon="mdi-package-variant"></v-icon><span>{{ product.productId }} &</span>
+                                        <v-icon icon="mdi-package-variant"></v-icon>
+                                        <span>{{ productStore.getProductById(product.productId)?.title || product.productId }} &</span>
                                         <span>& Quantity: {{ product.quantity }}</span>
                                         <template #append>
                                             <v-btn class="ml-1" icon color="primary" @click="updateQuantity(product, false)">
@@ -33,7 +34,8 @@
                             <v-col cols="12">
                                 <v-select
                                     v-model="selectProduct"
-                                    :items="productsSelect"
+                                    :items="productSelect"
+                                    item-value="id"
                                     label="Add Product to cart"
                                     @update:model-value="addProduct"
                                 ></v-select>
@@ -52,9 +54,9 @@
 </template>
 <script lang="ts" setup>
     import { useCartStore } from '~/store/cart';
+    import { useProductsStore } from '~/store/products';
+
     import { ICart } from '~/types/carts/cart';
-    // initial products change on adding product store
-    const productsSelect = Array.from({ length: 10 }, (_, i) => i + 1);
 
     const props = defineProps<{
         show: boolean;
@@ -62,12 +64,16 @@
         cart: ICart;
     }>();
     const cartStore = useCartStore();
+    const productStore = useProductsStore();
 
     const cartInfo = reactive<ICart>(props.cart || {});
 
     const dialog = computed(() => props.show);
     const selectProduct = ref();
     const title = computed(() => (props.add ? 'Add Cart' : 'Cart'));
+    const productSelect = computed(() =>
+        productStore.getProducts.filter((product) => cartInfo.products.find((cartProduct) => cartProduct.productId !== product.id))
+    );
 
     const emit = defineEmits<{
         (e: 'close'): void;
