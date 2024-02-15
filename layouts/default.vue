@@ -53,5 +53,6 @@
     .full-height {
         height: calc(100vh - 40px);
         overflow: auto;
+        overflow: auto;
     }
 </style>
