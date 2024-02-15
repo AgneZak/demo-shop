@@ -19,8 +19,8 @@
 </template>
 <script setup lang="ts">
     const menuItems = [
-        { text: 'Cart', id: 'cart', icon: 'mdi-clock' },
-        { text: 'Products', id: 'products', icon: 'mdi-flag' },
+        { text: 'Cart', id: 'cart', icon: 'mdi-cart-outline' },
+        { text: 'Products', id: 'products', icon: 'mdi-package-variant-closed' },
         { text: 'Users', id: 'users', icon: 'mdi-account' }
     ];
 
@@ -31,5 +31,6 @@
 <style lang="scss">
     .full-height {
         height: calc(100vh - 40px);
+        overflow: auto;
     }
 </style>
